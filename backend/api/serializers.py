@@ -70,12 +70,16 @@ class ScheduleSerializer(serializers.ModelSerializer):
 class ConsultationSerializer(serializers.ModelSerializer):
     client_name = serializers.CharField(source='client.username', read_only=True)
     consultant_name = serializers.CharField(source='consultant.username', read_only=True)
+    schedule_date = serializers.DateField(source='schedule.date', read_only=True)
+    schedule_start = serializers.TimeField(source='schedule.start_time', read_only=True)
+    schedule_end = serializers.TimeField(source='schedule.end_time', read_only=True)
 
     class Meta:
         model = Consultation
-        fields = ('id', 'client', 'consultant', 'client_name', 'consultant_name', 'schedule', 'category', 'status',
-                  'topic', 'notes', 'created_at')
-        read_only_fields = ('client', 'status', 'created_at')
+        fields = ('id', 'client', 'consultant', 'client_name', 'consultant_name',
+                  'schedule', 'schedule_date', 'schedule_start', 'schedule_end',
+                  'category', 'status', 'topic', 'notes', 'created_at')
+        read_only_fields = ('client', 'consultant', 'status', 'created_at')
 
 
 class ReviewSerializer(serializers.ModelSerializer):
